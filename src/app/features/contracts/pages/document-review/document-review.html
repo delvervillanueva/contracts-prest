@@ -1,0 +1,109 @@
+<div class="document-review">
+  <div class="document-review__scroll">
+    <header class="document-review__header">
+      <button type="button" class="document-review__back" (click)="goBack()">
+        <span class="document-review__back-icon" aria-hidden="true"></span>
+        <span class="document-review__back-text">Volver</span>
+      </button>
+      <div class="document-review__brand" aria-label="Santander Consumer">
+        <svg
+          class="document-review__brand-icon"
+          viewBox="0 0 24 28"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path
+            d="M12 0c2.5 3.8 8 6.5 8 12.5 0 5-3.5 9-8 11.5C7.5 21.5 4 17.5 4 12.5 4 6.5 9.5 3.8 12 0z"
+            fill="currentColor"
+          />
+        </svg>
+        <span class="document-review__brand-text">Santander Consumer</span>
+      </div>
+    </header>
+
+    <main class="document-review__main">
+      <h1 class="document-review__title">
+        <span class="document-review__title-line">¡Un último paso y terminamos!</span>
+        <span class="document-review__title-line">
+          Revisa estos <span class="document-review__title-accent">documentos</span>
+        </span>
+      </h1>
+      <p class="document-review__intro">
+        Revisa los documentos de condiciones y marca la casilla para aceptar
+        <strong class="document-review__intro-strong">cada uno</strong>.
+      </p>
+
+      <ul class="document-review__accordion" role="list">
+        @for (item of items(); track item.id) {
+          <li
+            class="document-review__accordion-item"
+            [class.document-review__accordion-item--expanded]="isExpanded(item.id)"
+          >
+            <div class="document-review__accordion-header">
+              <div
+                class="document-review__checkbox-wrap"
+                (click)="$event.stopPropagation()"
+              >
+                <std-checkbox
+                  [value]="item.id"
+                  [name]="'document-review-' + item.id"
+                  [checked]="item.accepted"
+                  [label]="''"
+                  [status]="checkboxStatus(item)"
+                  (changeEvent)="onCheckboxChange($event)"
+                ></std-checkbox>
+              </div>
+              <button
+                type="button"
+                class="document-review__accordion-trigger"
+                (click)="toggleExpand(item.id)"
+                [attr.aria-expanded]="isExpanded(item.id)"
+                [attr.aria-controls]="'document-review-panel-' + item.id"
+                [id]="'document-review-heading-' + item.id"
+              >
+                <span class="document-review__accordion-title">{{ item.label }}</span>
+                <span class="document-review__accordion-chevron" aria-hidden="true"></span>
+              </button>
+            </div>
+            @if (isExpanded(item.id)) {
+              <div
+                class="document-review__accordion-content"
+                role="region"
+                [attr.aria-labelledby]="'document-review-heading-' + item.id"
+                [id]="'document-review-panel-' + item.id"
+              >
+                <p class="document-review__accordion-text">{{ item.detailText }}</p>
+              </div>
+            }
+          </li>
+        }
+      </ul>
+
+      @if (showValidationError()) {
+        <div class="document-review__validation" role="alert">
+          <svg
+            class="document-review__validation-icon"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+            />
+          </svg>
+          <p class="document-review__validation-text">
+            Hay documentos sin marcar. Para continuar debes aceptar y marcar todos los
+            documentos.
+          </p>
+        </div>
+      }
+    </main>
+  </div>
+
+  <footer class="document-review__footer document-review__footer--fixed">
+    <button type="button" class="document-review__footer-button" (click)="acceptAndContinue()">
+      Aceptar y continuar
+    </button>
+  </footer>
+</div>
