@@ -30,6 +30,11 @@
               },
               {
                 "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
+              },
+              {
+                "glob": "**/*",
                 "input": "stencil-library/_pkg/package/dist/collection/assets",
                 "output": "assets"
               }
@@ -90,6 +95,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
               },
               {
                 "glob": "**/*",

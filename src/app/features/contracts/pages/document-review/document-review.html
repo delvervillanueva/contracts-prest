@@ -3,9 +3,9 @@
     <header class="document-review__header">
       <button type="button" class="document-review__back" (click)="goBack()">
         <span class="document-review__back-icon" aria-hidden="true"></span>
-        <span class="document-review__back-text">Volver</span>
+        <span class="document-review__back-text">{{ texts().back }}</span>
       </button>
-      <div class="document-review__brand" aria-label="Santander Consumer">
+      <div class="document-review__brand" [attr.aria-label]="texts().brandAriaLabel">
         <svg
           class="document-review__brand-icon"
           viewBox="0 0 24 28"
@@ -17,20 +17,21 @@
             fill="currentColor"
           />
         </svg>
-        <span class="document-review__brand-text">Santander Consumer</span>
+        <span class="document-review__brand-text">{{ texts().brandName }}</span>
       </div>
     </header>
 
     <main class="document-review__main">
       <h1 class="document-review__title">
-        <span class="document-review__title-line">¡Un último paso y terminamos!</span>
+        <span class="document-review__title-line">{{ texts().titleLine1 }}</span>
         <span class="document-review__title-line">
-          Revisa estos <span class="document-review__title-accent">documentos</span>
+          {{ texts().titleLine2 }}
+          <span class="document-review__title-accent">{{ texts().titleAccent }}</span>
         </span>
       </h1>
       <p class="document-review__intro">
-        Revisa los documentos de condiciones y marca la casilla para aceptar
-        <strong class="document-review__intro-strong">cada uno</strong>.
+        {{ texts().intro }}
+        <strong class="document-review__intro-strong">{{ texts().introStrong }}</strong>.
       </p>
 
       <ul class="document-review__accordion" role="list">
@@ -61,7 +62,7 @@
                 [attr.aria-controls]="'document-review-panel-' + item.id"
                 [id]="'document-review-heading-' + item.id"
               >
-                <span class="document-review__accordion-title">{{ item.label }}</span>
+                <span class="document-review__accordion-title">{{ itemLabel(item.id) }}</span>
                 <span class="document-review__accordion-chevron" aria-hidden="true"></span>
               </button>
             </div>
@@ -72,7 +73,7 @@
                 [attr.aria-labelledby]="'document-review-heading-' + item.id"
                 [id]="'document-review-panel-' + item.id"
               >
-                <p class="document-review__accordion-text">{{ item.detailText }}</p>
+                <p class="document-review__accordion-text">{{ itemDetailText(item.id) }}</p>
               </div>
             }
           </li>
@@ -92,10 +93,7 @@
               d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
             />
           </svg>
-          <p class="document-review__validation-text">
-            Hay documentos sin marcar. Para continuar debes aceptar y marcar todos los
-            documentos.
-          </p>
+          <p class="document-review__validation-text">{{ texts().validationError }}</p>
         </div>
       }
     </main>
@@ -103,7 +101,7 @@
 
   <footer class="document-review__footer document-review__footer--fixed">
     <button type="button" class="document-review__footer-button" (click)="acceptAndContinue()">
-      Aceptar y continuar
+      {{ texts().acceptButton }}
     </button>
   </footer>
 </div>
